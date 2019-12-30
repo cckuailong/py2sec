@@ -1,6 +1,6 @@
 # py2sec
 
-[中文](https://github.com/cckuailong/py2sec/blob/master/README_zh.md)
+[中文 Readme](https://github.com/cckuailong/py2sec/blob/master/README_zh.md)
 
 ## OS Support
 
