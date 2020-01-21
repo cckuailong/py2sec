@@ -55,9 +55,9 @@ python py2sec.py [选项] ...
 ```
 
 ```
-python py2sec.py -f test_file.py
-python py2sec.py -f test/test_file.py
-python py2sec.py -d test_dir -m __init__.py,setup.py,[poc/,resource/,venv/,interface/]
+python py2sec.py -f test.py
+python py2sec.py -f example/test1.py
+python py2sec.py -d example/ -m test1.py,[bbb/]
 ```
 
 ### 项目结构
@@ -65,6 +65,7 @@ python py2sec.py -d test_dir -m __init__.py,setup.py,[poc/,resource/,venv/,inter
 - build/              临时文件夹, .o, .so 文件
 - tmp_build/          临时文件夹, .c 文件
 - result/             加密最终结果存放目录
+- result/log.txt      加密日志
 - py2sec.py           主函数文件
 - setup.py.template   用于生成setup.py的模板文件
 - requirements.txt    需要的环境

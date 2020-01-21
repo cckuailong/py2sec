@@ -19,17 +19,17 @@ Options:
   -h,  --help       Show the help info
   -p,  --py         Python version, default value == 3
                     Example: -p 3  (means you tends to encrypt python3)
-  -d,  --directory  Directory of your project (if use -d, you change the whole directory)
-  -f,  --file       File to be transfered (if use -f, you only change one file)
+  -d,  --directory  Directory of your project (if use -d, you encrypt the whole directory)
+  -f,  --file       File to be transfered (if use -f, you only encrypt one file)
   -m,  --maintain   List the file or the directory you don't want to transfer
                     Note: The directories should be surrounded by '[]', and must be the relative path to -d's value 
                     Example: -m __init__.py,setup.py,[poc/,resource/,venv/,interface/]
   -x,  --nthread    number of parallel thread to build jobs
 
 Example:
-  python py2sec.py -f test_file.py
-  python py2sec.py -f test/test_file.py
-  python py2sec.py -d test_dir -m __init__.py,setup.py,[poc/,resource/,venv/,interface/]
+  python py2sec.py -f test.py
+  python py2sec.py -f example/test1.py
+  python py2sec.py -d example/ -m test1.py,[bbb/]
         '''
         self.py_ver = '3'
         self.file_name = ''
@@ -62,7 +62,10 @@ Example:
                     print("Error, don not use -d -f at the same time")
                     print(self.help_show)
                     sys.exit(1)
-                self.root_name = value
+                if value[-1] == '/':
+                    self.root_name = value[:-1]
+                else:
+                    self.root_name = value
             elif key in ["-f", "--file"]:
                 if self.root_name:
                     print("Error, don not use -d -f at the same time")
@@ -143,15 +146,15 @@ Example:
             shutil.rmtree("build/")
         if os.path.exists("tmp_build/"):
             shutil.rmtree("tmp_build/")
-        p = subprocess.Popen("python setup.py build_ext > log.txt", shell=True, stderr=subprocess.PIPE)
+        p = subprocess.Popen("python setup.py build_ext > result/log.txt", shell=True, stderr=subprocess.PIPE)
         p.wait()
         err = p.stderr.readlines()
         if err:
             if self.py_ver == '3':
-                p = subprocess.Popen("python3 setup.py build_ext > log.txt", shell=True, stderr=subprocess.PIPE)
+                p = subprocess.Popen("python3 setup.py build_ext > result/log.txt", shell=True, stderr=subprocess.PIPE)
                 p.wait()
             else:
-                p = subprocess.Popen("python2 setup.py build_ext > log.txt", shell=True, stderr=subprocess.PIPE)
+                p = subprocess.Popen("python2 setup.py build_ext > result/log.txt", shell=True, stderr=subprocess.PIPE)
                 p.wait()
     
 
