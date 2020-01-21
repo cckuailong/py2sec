@@ -73,8 +73,8 @@ Example:
                 self.m_list = value
                 if self.m_list.find(",[") != -1:
                     tmp = self.m_list.split(",[")
-                    self.file_list = tmp[0]
-                    self.dir_list = tmp[1:-1]
+                    self.file_list = tmp[:-1]
+                    self.dir_list = tmp[-1]
                     self.file_flag = 1
                     self.dir_flag = 1
                 elif self.m_list.find("[") != -1:
@@ -87,6 +87,8 @@ Example:
                     dir_tmp = self.dir_list.split(",")
                     self.dir_list=[]
                     for d in dir_tmp:
+                        if d[-1] == ']':
+                            d = d[:-1]
                         if d.startswith("./"):
                             self.dir_list.append(d[2:])
                         else:
