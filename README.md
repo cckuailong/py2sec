@@ -1,6 +1,6 @@
 # py2sec
 
-[English Readme](https://github.com/cckuailong/py2sec/blob/master/README.md)
+[English Readme](https://github.com/cckuailong/py2sec/blob/master/README_en.md)
 
 ## 系统支持
 
