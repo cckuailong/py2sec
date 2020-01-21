@@ -23,7 +23,7 @@ Options:
   -f,  --file       File to be transfered (if use -f, you only change one file)
   -m,  --maintain   List the file or the directory you don't want to transfer
                     Note: The directories should be surrounded by '[]', and must be the relative path to -d's value 
-                    Example: -m __init__.py,setup.py,[poc,resource,venv,interface]
+                    Example: -m __init__.py,setup.py,[poc/,resource/,venv/,interface/]
   -x,  --nthread    number of parallel thread to build jobs
 
 Example:
@@ -74,7 +74,7 @@ Example:
                 if self.m_list.find(",[") != -1:
                     tmp = self.m_list.split(",[")
                     self.file_list = tmp[0]
-                    self.dir_list = tmp[1:-1]
+                    self.dir_list = tmp[1][:-1]
                     self.file_flag = 1
                     self.dir_flag = 1
                 elif self.m_list.find("[") != -1:
