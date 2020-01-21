@@ -1,6 +1,6 @@
 # py2sec
 
-[中文 Readme](https://github.com/cckuailong/py2sec/blob/master/README_zh.md)
+[中文 Readme](https://github.com/cckuailong/py2sec/blob/master/README.md)
 
 ## OS Support
 
@@ -46,8 +46,8 @@ python py2sec.py [options] ...
 -h,  --help       Show the help info
 -p,  --py         Python version, default value == 3
                   Example: -p 3  (means you tends to encrypt python3)
--d,  --directory  Directory of your project (if use -d, you change the whole directory)
--f,  --file       File to be transfered (if use -f, you only change one file)
+-d,  --directory  Directory of your project (if use -d, you encrypt the whole directory)
+-f,  --file       File to be transfered (if use -f, you only encrypt one file)
 -m,  --maintain   List the file or the directory you don't want to transfer
                   Note: The directories should be surrounded by '[]', and must be the relative path to -d's value
                   Example: -m __init__.py,setup.py,[poc,resource,venv,interface]
@@ -57,9 +57,9 @@ python py2sec.py [options] ...
 ### Example
 
 ```
-python py2sec.py -f test_file.py
-python py2sec.py -f test/test_file.py
-python py2sec.py -d test_dir -m __init__.py,setup.py,[poc/,resource/,venv/,interface/]
+python py2sec.py -f test.py
+python py2sec.py -f example/test1.py
+python py2sec.py -d example/ -m test1.py,[bbb/]
 ```
 
 ### Project Structure
@@ -67,6 +67,7 @@ python py2sec.py -d test_dir -m __init__.py,setup.py,[poc/,resource/,venv/,inter
 - build/              temp files, .o, .so files
 - tmp_build/          temp files, .c files
 - result/             the final result dir, the results store here
+- result/log.txt      the log file
 - py2sec.py           main run file
 - setup.py.template   to generate setup.py file
 - requirements.txt    env to run py2sec
