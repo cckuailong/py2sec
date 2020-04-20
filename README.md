@@ -74,8 +74,8 @@ python py2sec.py -d example/ -m test1.py,[bbb/]
 
 整个Python项目加密前:
 
-![demo1](https://github.com/cckuailong/py2sec/blob/master/img/1.png)
+![demo1](img/1.png)
 
 py2sec加密后效果:
 
-![demo2](https://github.com/cckuailong/py2sec/blob/master/img/2.png)
+![demo2](img/2.png)
