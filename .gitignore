@@ -1,0 +1,12 @@
+# Byte-compiled
+__pycache__/
+
+#IDE
+.vscode/
+。idea/
+
+#for test
+test.py
+example/build/
+example/result/
+example/tmp_build/
