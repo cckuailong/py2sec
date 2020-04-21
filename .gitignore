@@ -3,10 +3,11 @@ __pycache__/
 
 #IDE
 .vscode/
-。idea/
+.idea/
 
 #for test
 test.py
-example/build/
-example/result/
-example/tmp_build/
+build/
+result/
+tmp_build/
+py2sec_build.py

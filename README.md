@@ -16,14 +16,13 @@ error: command 'cl.exe' failed: No such file or directory
 
 ## py2sec简介
 
-1. py2sec是一款跨平台，快速敏捷的 python文件加密工具，可以将.py加密成.so(Linux && Mac)，或.pyd(Win)文件
-2. py2sec可以用来加密python文件或项目
-3. py2sec加密一个py文件，也可以直接加密一整个python项目
-4. .py生成的.so（.pyd）文件可以被主文件通过 "from module import * " 调用
-5. py2sec可以自动识别项目中的py文件, 如果项目中某些文件你不想加密，py2sec也可以实现你的目的
-6. py2sec不影响源文件，加密后的文件或项目将被存放在新的路径
-7. py2sec 支持 python2 and python3, 请使用 -p(--py)来切换要加密的代码的python版本
-8. 支持多线程加密，加密文件较多时，速度提升明显
+1. py2sec 一款轻量的脚本工具，辅助将 .py 编译成动态链接库文件 .so(Linux && Mac)，或.pyd(Win)
+2. py2sec加密一个py文件，也可以直接加密一整个python项目
+3. .py生成的.so（.pyd）文件可以被主文件通过 "from module import * " 调用
+4. py2sec可以自动识别项目中的py文件, 如果项目中某些文件你不想加密，py2sec也可以实现你的目的
+5. py2sec不影响源文件，加密后的文件或项目将被存放在新的路径
+6. py2sec 支持 python2 and python3, 请使用 -p(--py)来切换要加密的代码的python版本
+7. 支持多线程加密，加密文件较多时，速度提升明显
 
 ## 环境配置
 
@@ -42,7 +41,7 @@ python py2sec.py [选项] ...
 ### 选项
 
 ```
--v,  --version    显示py2sec_py3版本
+-v,  --version    显示 py2sec 版本
 -h,  --help       显示帮助菜单
 -p,  --py         Python的版本, 默认值为 3
                   例: -p 3  (比如你使用python3)
@@ -57,7 +56,7 @@ python py2sec.py [选项] ...
 ```
 python py2sec.py -f test.py
 python py2sec.py -f example/test1.py
-python py2sec.py -d example/ -m test1.py,[bbb/]
+python py2sec.py -d example/ -m test1.py,bbb/
 ```
 
 ### 项目结构

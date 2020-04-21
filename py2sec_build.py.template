@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+
+import os
+from distutils.core import setup
+from distutils.extension import Extension
+from Cython.Build import cythonize
+from Cython.Distutils import build_ext
+
+extentions = []
+full_filenames = [r"%s"]
+print('--- py mods:')
+for full_filename in full_filenames:
+    filename = full_filename[:-3].replace(os.path.sep, '.')
+    print(filename)
+    extention = Extension(filename, [full_filename])
+    extention.cython_c_in_temp = True
+    extentions.append(extention)
+
+py_ver = '%s'
+compiler_directives={}
+if py_ver == '':
+    py_ver = '3'
+compiler_directives={"language_level": py_ver}
+
+print('--- building:')
+setup(
+    cmdclass={'build_ext': build_ext},
+    ext_modules = cythonize(extentions, nthreads=%s, build_dir="tmp_build", quiet=False, compiler_directives=compiler_directives)
+)
