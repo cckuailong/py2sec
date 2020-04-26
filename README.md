@@ -46,7 +46,7 @@ python py2sec.py [选项] ...
 ```
 -v,  --version    显示 py2sec 版本
 -h,  --help       显示帮助菜单
--p,  --py         Python的版本, 默认值为 3
+-p,  --pyth       Python的版本, 默认为 你的 "python" 命令绑定的python版本
                   例: -p 3  (比如你使用python3)
 -d,  --directory  Python项目路径 (如果使用-d参数, 将编译整个Python项目)
 -f,  --file       Python文件 (如果使用-f, 将编译单个Python文件)
@@ -54,23 +54,27 @@ python py2sec.py [选项] ...
                   注意: 文件夹需要以路径分隔符号（`/`或`\\`，依据系统而定）结尾，并且需要和-d参数一起使用 
                   例: -m setup.py,mod/__init__.py,exclude_dir/
 -x  --nthread     编译启用的线程数
+-q  --quiet       静默模式，默认False
 ```
 
 ```
 python py2sec.py -f test.py
 python py2sec.py -f example/test1.py
 python py2sec.py -d example/ -m test1.py,bbb/
+
+# 一些操作系统使用 "python3" 命令来执行python3，如Ubuntu，这里可以使用 -p 参数来运行
+python3 py2sec.py -p 3 -d example/
 ```
 
 ### 项目结构
 
-- build/              临时文件夹, .o, .so 文件
-- tmp_build/          临时文件夹, .c 文件
-- result/             编译最终结果存放目录
-- result/log.txt      编译过程日志
-- py2sec.py           主函数文件
-- py2sec_build.py.template   用于生成 py2sec_build.py 的模板文件
-- requirements.txt    依赖库的清单
+- build/                    临时文件夹, .o, .so/.pyd 文件
+- tmp_build/                临时文件夹, .c 文件
+- result/                   编译最终结果存放目录
+- result/log.txt            编译过程日志
+- py2sec.py                 主函数文件
+- py2sec_build.py.template  用于生成 py2sec_build.py 的模板文件
+- requirements.txt          依赖库的清单
 
 ### 示例
 

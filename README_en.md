@@ -42,16 +42,18 @@ python py2sec.py [options] ...
 ### Options
 
 ```
--v,  --version    Show the version of the py2sec
--h,  --help       Show the help info
--p,  --py         Python version, default value == 3
-                  Example: -p 3  (means you tends to encrypt python3)
--d,  --directory  Directory of your project (if use -d, you encrypt the whole directory)
--f,  --file       File to be transfered (if use -f, you only encrypt one file)
--m,  --maintain   List the file or the directory you don't want to transfer
-                  Note: The directories should be surrounded by '[]', and must be the relative path to -d's value
-                  Example: -m __init__.py,setup.py,[poc,resource,venv,interface]
--x,  --nthread    number of parallel thread to build jobs
+-v,  --version      Show the version of the py2sec
+-h,  --help         Show the help info
+-p,  --python       Python version, default is based on the version of python you bind with command "python"
+                    Example: -p 3  (means you tends to encrypt python3)
+-d,  --directory    Directory of your project (if use -d, you encrypt the whole directory)
+-f,  --file         File to be transfered (if use -f, you only encrypt one file)
+-m,  --maintain     List the file or the directory you don't want to transfer
+                    Note: The directories should be suffix by path separate char ('\\' in Windows or '/'),
+                    and must be the relative path to -d's value
+                    Example: -m setup.py,mod/__init__.py,exclude_dir/
+-x,  --nthread      number of parallel thread to build jobs
+-q  --quiet         Quiet Mode, Default: False
 ```
 
 ### Example
@@ -59,18 +61,21 @@ python py2sec.py [options] ...
 ```
 python py2sec.py -f test.py
 python py2sec.py -f example/test1.py
-python py2sec.py -d example/ -m test1.py,[bbb/]
+python py2sec.py -d example/ -m test1.py,bbb/
+
+# some OS use command "python3" to run python3, like Ubuntu, you can use -p to solve it
+python3 py2sec.py -p 3 -d example/
 ```
 
 ### Project Structure
 
-- build/              temp files, .o, .so files
-- tmp_build/          temp files, .c files
-- result/             the final result dir, the results store here
-- result/log.txt      the log file
-- py2sec.py           main run file
-- setup.py.template   to generate setup.py file
-- requirements.txt    env to run py2sec
+- build/                    temp files, .o, .so files
+- tmp_build/                temp files, .c files
+- result/                   the final result dir, the results store here
+- result/log.txt            the log file
+- py2sec.py                 main run file
+- py2sec_build.py.template  to generate setup.py file
+- requirements.txt          env to run py2sec
 
 ### Demo
 

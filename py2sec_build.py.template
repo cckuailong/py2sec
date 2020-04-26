@@ -25,5 +25,5 @@ compiler_directives={"language_level": py_ver}
 print('--- building:')
 setup(
     cmdclass={'build_ext': build_ext},
-    ext_modules = cythonize(extentions, nthreads=%s, build_dir="tmp_build", quiet=False, compiler_directives=compiler_directives)
+    ext_modules = cythonize(extentions, nthreads=%s, build_dir="tmp_build", quiet=%s, compiler_directives=compiler_directives)
 )

@@ -13,6 +13,7 @@ class OptionsOfBuild():
         self.rootName = ''
         self.excludeFiles = []
         self.nthread = '1'
+        self.quiet = "False"
 
 
 isWindows = True if platform.system() == 'Windows' else False
@@ -30,20 +31,25 @@ Usage: python py2sec.py [options] ...
 Options:
   -v,  --version    Show the version of the py2sec
   -h,  --help       Show the help info
-  -p,  --python     Python version, default is '3'
+  -p,  --python     Python version, default is based on the version of python you bind with command "python" 
                     Example: -p 3  (means you tends to encrypt python3)
   -d,  --directory  Directory of your project (if use -d, you encrypt the whole directory)
   -f,  --file       File to be transfered (if use -f, you only encrypt one file)
   -m,  --maintain   List the file or the directory you don't want to transfer
                     Note: The directories should be suffix by path separate char ('\\' in Windows or '/'), 
-                    and must be the relative path to -d's value 
+                    and must be the relative path to -d's value
                     Example: -m setup.py,mod/__init__.py,exclude_dir/
   -x,  --nthread    number of parallel thread to build jobs
+  -q  --quiet         Quiet Mode, Default: False
+
 
 Example:
   python py2sec.py -f test.py
   python py2sec.py -f example/test1.py
   python py2sec.py -d example/ -m test1.py,bbb/
+
+  # some OS use command "python3" to run python3, like Ubuntu, you can use -p to solve it
+  python3 py2sec.py -p 3 -d example/
 '''
 
 buildingScript_fileName = 'tmp_py2sec_build.py'
@@ -132,19 +138,18 @@ def makeDirs(dirpath):
         Author: nodewee (https://nodewee.github.io)
     '''
 
-    # 去除首尾空白符和右侧的路径分隔符
     dirpath = dirpath.strip().rstrip(os.path.sep)
 
     if dirpath:
-        if not os.path.exists(dirpath):  # 如果目录已存在, 则忽略，否则才创建
+        if not os.path.exists(dirpath):
             os.makedirs(dirpath)
 
 
 def getCommandOptions(opts):
     try:
-        options, _ = getopt.getopt(sys.argv[1:], "vhp:d:f:m:x:", [
-            "version", "help", "py=", "directory=", "file=", "maintain=",
-            "nthread="
+        options, _ = getopt.getopt(sys.argv[1:], "vhp:d:f:m:x:q", [
+            "version", "help", "python=", "directory=", "file=", "maintain=",
+            "nthread=", "quiet"
         ])
     except getopt.GetoptError:
         print("Get options Error")
@@ -163,7 +168,6 @@ def getCommandOptions(opts):
         elif key in ["-d", "--directory"]:
             if opts.fileName:
                 print("Canceled. Do not use -d -f at the same time")
-                # print(HELP_TEXT)
                 sys.exit(1)
             if value[-1] == '/':
                 opts.rootName = value[:-1]
@@ -172,33 +176,27 @@ def getCommandOptions(opts):
         elif key in ["-f", "--file"]:
             if opts.rootName:
                 print("Canceled. Do not use -d -f at the same time")
-                # print(HELP_TEXT)
                 sys.exit(1)
             opts.fileName = value
         elif key in ["-m", "--maintain"]:
             for path_assign in value.split(","):
-                if not path_assign[-1:] in [
-                        '/', '\\'
-                ]:  # if last char is not a path sep, consider it's assign a file
+                if not path_assign[-1:] in ['/', '\\']:  # if last char is not a path sep, consider it's assign a file
                     opts.excludeFiles.append(path_assign)
                 else:  # assign a dir
                     assign_dir = path_assign.strip('/').strip('\\')
-                    # print('assign_dir:', assign_dir)
                     tmp_dir = os.path.join(opts.rootName, assign_dir)
-                    # print('tmp_dir:', tmp_dir)
                     files = getFiles_inDir(dir_path=tmp_dir,
                                            includeSubfolder=True,
                                            path_type=1)
                     #
                     for file in files:
-                        # print(file)
                         fpath = os.path.join(assign_dir, file)
                         opts.excludeFiles.append(fpath)
-            # print('---exclude')
-            # print(opts.excludeFiles)
+
         elif key in ["-x", "--nthread"]:
             opts.nthread = value
-
+        elif key in ["-q", "--quiet"]:
+            opts.quiet = "True"
     #
     return opts
 
@@ -240,7 +238,7 @@ def genSetup(opts, will_compile_files):
     with open(buildingScript_template_fileName, "r") as f:
         template = f.read()
     files = '", r"'.join(will_compile_files)
-    cont = template % (files, opts.pyVer, opts.nthread)
+    cont = template % (files, opts.pyVer, opts.nthread, opts.quiet)
     with open(buildingScript_fileName, "w") as f:
         f.write(cont)
 
@@ -259,8 +257,7 @@ def pyEncrypt(opts):
     # prepare folders
     makeDirs('build')
     makeDirs('tmp_build')
-    # cmd = " {0} build_ext > {1}".format(buildingScript_fileName,
-    #                                     os.path.join('build', 'log.txt'))
+
     cmd = " {0} build_ext".format(buildingScript_fileName)
     if opts.pyVer == '':
         cmd = 'python' + cmd
@@ -278,7 +275,6 @@ def pyEncrypt(opts):
 def genProject(opts):
     makeDirs('result')
     for file in getFiles_inDir('build', True, 1, ['.so', '.pyd']):
-        print(file)
         src_path = os.path.join('build', file)
         mid_path = os.path.sep.join(file.split(os.path.sep)[1:-1])
         file_name_parts = os.path.basename(src_path).split('.')
@@ -286,14 +282,11 @@ def genProject(opts):
         dest_path = os.path.join('result', mid_path, file_name)
         makeDirs(os.path.dirname(dest_path))
         shutil.copy(src_path, dest_path)
-    # # copy exclude files
-    # for file in opts.excludeFiles:
 
 
 if __name__ == "__main__":
     opts = getCommandOptions(OptionsOfBuild())
     will_compile_files = getEncryptFileList(opts)
-    # print(will_compile_files)
     clearBuildFolders()
     if not isWindows:
         genSetup(opts, will_compile_files)
