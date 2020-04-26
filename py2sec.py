@@ -40,7 +40,7 @@ Options:
                     and must be the relative path to -d's value
                     Example: -m setup.py,mod/__init__.py,exclude_dir/
   -x,  --nthread    number of parallel thread to build jobs
-  -q  --quiet         Quiet Mode, Default: False
+  -q  --quiet       Quiet Mode, Default: False
 
 
 Example:
