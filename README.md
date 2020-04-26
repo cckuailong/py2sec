@@ -2,7 +2,7 @@
 
 [English Readme](https://github.com/cckuailong/py2sec/blob/master/README_en.md)
 
-py2sec 一款轻量的脚本工具，将 .py 编译成动态链接库文件 .so(Linux && Mac)，或.pyd(Win)。实现一定程度上“加密”保护源代码。
+py2sec 一款轻量的脚本工具，基于 Cython 将 .py 编译成 run-time libraries 文件：.so (Linux && Mac)，或 .pyd (Win)。一定程度上实现了“加密”保护源代码的需求。
 
 ## 系统支持
 

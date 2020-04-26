@@ -10,4 +10,4 @@ test.py
 build/
 result/
 tmp_build/
-py2sec_build.py
+tmp_py2sec_build.py

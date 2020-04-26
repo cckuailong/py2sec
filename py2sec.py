@@ -43,10 +43,11 @@ Options:
 Example:
   python py2sec.py -f test.py
   python py2sec.py -f example/test1.py
-  python py2sec.py -d example/ -m test1.py,[bbb/]
+  python py2sec.py -d example/ -m test1.py,bbb/
 '''
 
-buildingScript_fileName = 'py2sec_build.py'
+buildingScript_fileName = 'tmp_py2sec_build.py'
+buildingScript_template_fileName = 'py2sec_build.py.template'
 
 
 def getFiles_inDir(dir_path,
@@ -128,13 +129,14 @@ def makeDirs(dirpath):
     创建目录
         支持多级目录，若目录已存在自动忽略
         Updated: 2020-02-27
+        Author: nodewee (https://nodewee.github.io)
     '''
 
     # 去除首尾空白符和右侧的路径分隔符
     dirpath = dirpath.strip().rstrip(os.path.sep)
 
     if dirpath:
-        if not os.path.exists(dirpath):  # 如果目录已存在, 则pass，否则才创建
+        if not os.path.exists(dirpath):  # 如果目录已存在, 则忽略，否则才创建
             os.makedirs(dirpath)
 
 
@@ -235,7 +237,7 @@ def getEncryptFileList(opts):
 def genSetup(opts, will_compile_files):
     if os.path.exists(buildingScript_fileName):
         os.remove(buildingScript_fileName)
-    with open("py2sec_build.py.template", "r") as f:
+    with open(buildingScript_template_fileName, "r") as f:
         template = f.read()
     files = '", r"'.join(will_compile_files)
     cont = template % (files, opts.pyVer, opts.nthread)
