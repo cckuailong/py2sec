@@ -11,3 +11,4 @@ build/
 result/
 tmp_build/
 tmp_py2sec_build.py
+log.txt
