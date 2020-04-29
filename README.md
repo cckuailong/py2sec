@@ -20,12 +20,13 @@ error: command 'cl.exe' failed: No such file or directory
 
 1. .so / .pyd 文件可以像 .py 模块一样正常调用。例如：`import` 或 `from module import * "`
 2. py2sec 可以指定编译单个 .py 文件，也可以指定一个 python 项目目录
-3. py2sec 自动识别项目中的 .py 文件，且只编译 .py 类型文件
-4. 可以指定不需要编译的文件或子目录
-5. py2sec 不影响源文件，加密后的文件或项目将被存放在 result 文件夹
-6. 兼容多平台：macOS、Linux、Windows、
-7. 兼容 Python 版本：python2 and python3, 可使用 -p(--py) 参数来指定版本
-8. 支持多线程（待改进）
+3. py2sec 还可以提升代码运行速度，至多提升30倍
+4. py2sec 自动识别项目中的 .py 文件，且只编译 .py 类型文件
+5. 可以指定不需要编译的文件或子目录
+6. py2sec 不影响源文件，加密后的文件或项目将被存放在 result 文件夹
+7. 兼容多平台：macOS、Linux、Windows、
+8. 兼容 Python 版本：python2 and python3, 可使用 -p(--py) 参数来指定版本
+9. 支持多线程（待改进）
 
 ## 环境配置
 
