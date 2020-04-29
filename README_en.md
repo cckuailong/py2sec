@@ -53,14 +53,15 @@ python py2sec.py [options] ...
                     and must be the relative path to -d's value
                     Example: -m setup.py,mod/__init__.py,exclude_dir/
 -x,  --nthread      number of parallel thread to build jobs
--q  --quiet         Quiet Mode, Default: False
+-q   --quiet        Quiet Mode, Default: False
+-r   --release      Release Mode, clear all the tmp files, only output the result, Default: False
 ```
 
 ### Example
 
 ```
 python py2sec.py -f test.py
-python py2sec.py -f example/test1.py
+python py2sec.py -f example/test1.py -r
 python py2sec.py -d example/ -m test1.py,bbb/
 
 # some OS use command "python3" to run python3, like Ubuntu, you can use -p to solve it

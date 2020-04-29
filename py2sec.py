@@ -14,11 +14,12 @@ class OptionsOfBuild():
         self.excludeFiles = []
         self.nthread = '1'
         self.quiet = "False"
+        self.release = False
 
 
 isWindows = True if platform.system() == 'Windows' else False
 
-py2sec_version = ('0', '3', '0')
+py2sec_version = ('0', '3', '1')
 
 HELP_TEXT = '''
 py2sec is a Cross-Platform, Fast and Flexible tool to compile the .py to .so(Linux and Mac) or .pdy(Win).
@@ -41,11 +42,12 @@ Options:
                     Example: -m setup.py,mod/__init__.py,exclude_dir/
   -x,  --nthread    number of parallel thread to build jobs
   -q   --quiet      Quiet Mode, Default: False
+  -r   --release    Release Mode, clear all the tmp files, only output the result, Default: False
 
 
 Example:
   python py2sec.py -f test.py
-  python py2sec.py -f example/test1.py
+  python py2sec.py -f example/test1.py -r
   python py2sec.py -d example/ -m test1.py,bbb/
 
   # some OS use command "python3" to run python3, like Ubuntu, you can use -p to solve it
@@ -147,9 +149,9 @@ def makeDirs(dirpath):
 
 def getCommandOptions(opts):
     try:
-        options, _ = getopt.getopt(sys.argv[1:], "vhp:d:f:m:x:q", [
+        options, _ = getopt.getopt(sys.argv[1:], "vhp:d:f:m:x:qr", [
             "version", "help", "python=", "directory=", "file=", "maintain=",
-            "nthread=", "quiet"
+            "nthread=", "quiet", "release"
         ])
     except getopt.GetoptError:
         print("Get options Error")
@@ -197,7 +199,9 @@ def getCommandOptions(opts):
             opts.nthread = value
         elif key in ["-q", "--quiet"]:
             opts.quiet = "True"
-    #
+        elif key in ["-r", "--release"]:
+            opts.release = True
+    
     return opts
 
 
@@ -251,6 +255,14 @@ def clearBuildFolders():
     if os.path.isdir("result"):
         shutil.rmtree("result")
 
+def clearTmpFiles():
+    if os.path.isdir("build"):
+        shutil.rmtree("build")
+    if os.path.isdir("tmp_build"):
+        shutil.rmtree("tmp_build")
+    if os.path.isfile("tmp_py2sec_build.py"):
+        os.remove("tmp_py2sec_build.py")
+
 
 def pyEncrypt(opts):
     print('> pyEncrypt')
@@ -269,7 +281,7 @@ def pyEncrypt(opts):
     p.wait()
     p.stdout
     err = p.stderr.readlines()
-    print(err)
+    #print(err)
 
 
 def genProject(opts):
@@ -282,6 +294,9 @@ def genProject(opts):
         dest_path = os.path.join('result', mid_path, file_name)
         makeDirs(os.path.dirname(dest_path))
         shutil.copy(src_path, dest_path)
+    if opts.release:
+        clearTmpFiles()
+    print("\nPy2Sec Encrypt Finished")
 
 
 if __name__ == "__main__":
@@ -295,5 +310,5 @@ if __name__ == "__main__":
         for file in will_compile_files:
             genSetup(opts, [file])
             pyEncrypt(opts)
-    #
+    
     genProject(opts)
