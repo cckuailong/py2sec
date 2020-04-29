@@ -263,7 +263,6 @@ def clearTmpFiles():
 
 
 def pyEncrypt(opts):
-    print('> pyEncrypt')
     # prepare folders
     makeDirs('build')
     makeDirs('tmp_build')
@@ -277,8 +276,9 @@ def pyEncrypt(opts):
         cmd = 'python' + cmd
     else:
         cmd = 'python' + opts.pyVer + cmd
-
-    print(cmd)
+    if not isWindows:
+        print('> pyEncrypt')
+        print(cmd)
     p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
     p.wait()
     p.stdout
