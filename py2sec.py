@@ -107,10 +107,8 @@ def getFiles_inDir(dir_path,
         len_of_inpath = len(dir_path)
         for root, dirs, files in os.walk(dir_path):
             for file_name in files:
-                #
                 if not willKeep_thisFile_by_ExtName(file_name):
                     continue
-                #
                 if path_type == 0:  # absolute path
                     yield os.path.join(root, file_name)
                 elif path_type == 1:  # relative path
@@ -270,7 +268,11 @@ def pyEncrypt(opts):
     makeDirs('build')
     makeDirs('tmp_build')
 
-    cmd = " {0} build_ext".format(buildingScript_fileName)
+    if opts.quiet == "True":
+        log = "> log.txt"
+    else:
+        log = ""
+    cmd = " {0} build_ext {1}".format(buildingScript_fileName, log)
     if opts.pyVer == '':
         cmd = 'python' + cmd
     else:
