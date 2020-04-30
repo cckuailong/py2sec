@@ -28,6 +28,8 @@ Please install Visual C++ Build Tools matches your Win version
 
 ## How to config it
 
+Please copy the directory or files to the root path of the py2sec.
+
 ```
 pip install requirements.txt
 ```

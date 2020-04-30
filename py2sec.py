@@ -279,11 +279,11 @@ def pyEncrypt(opts):
     if not isWindows:
         print('> pyEncrypt')
         print(cmd)
-    p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
-    p.wait()
-    p.stdout
-    err = p.stderr.readlines()
-    #print(err)
+    p = subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT)
+    code = p.wait()
+    if code:
+        print("\nPy2Sec Encrypt Encounter Error")
+        sys.exit(1)
 
 
 def genProject(opts):

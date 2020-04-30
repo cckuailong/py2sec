@@ -38,6 +38,8 @@ pip install requirements.txt
 
 ### 使用
 
+请将要加密的目录或文件存放在py2sec根目录下
+
 ```
 python py2sec.py [选项] ...
 ```
