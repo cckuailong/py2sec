@@ -81,6 +81,10 @@ python3 py2sec.py -p 3 -d example/
 - py2sec_build.py.template  to generate setup.py file
 - requirements.txt          env to run py2sec
 
+### LICENSE
+
+The Project follow the MIT LICENSE.
+
 ### Demo
 
 The whole project before:

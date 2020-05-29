@@ -1,2 +1,2 @@
-print(1)
+printnn(1)
 

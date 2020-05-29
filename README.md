@@ -80,6 +80,10 @@ python3 py2sec.py -p 3 -d example/
 - py2sec_build.py.template  用于生成 py2sec_build.py 的模板文件
 - requirements.txt          依赖库的清单
 
+### 协议
+
+本项目遵循MIT协议
+
 ### 示例
 
 整个Python项目编译前:
