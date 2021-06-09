@@ -1,9 +1,10 @@
+#  -*- coding: utf-8 -*-
 import getopt
 import os
-import sys
-import subprocess
-import shutil
 import platform
+import shutil
+import subprocess
+import sys
 
 
 class OptionsOfBuild():
@@ -199,7 +200,7 @@ def getCommandOptions(opts):
             opts.quiet = "True"
         elif key in ["-r", "--release"]:
             opts.release = True
-    
+
     return opts
 
 
@@ -217,7 +218,8 @@ def getEncryptFileList(opts):
                                  includeSubfolder=True,
                                  path_type=1,
                                  ext_names='.py')
-
+        # exclude __init__.py file
+        pyfiles = [pyfile for pyfile in pyfiles if not pyfile.endswith('__init__.py')]
         # filter maintain files
         tmp_files = list(set(pyfiles) - set(opts.excludeFiles))
         will_compile_files = []
@@ -253,6 +255,7 @@ def clearBuildFolders():
     if os.path.isdir("result"):
         shutil.rmtree("result")
 
+
 def clearTmpFiles():
     if os.path.isdir("build"):
         shutil.rmtree("build")
@@ -286,7 +289,7 @@ def pyEncrypt(opts):
         sys.exit(1)
 
 
-def genProject(opts):
+def genProject(opts, will_compile_files):
     makeDirs('result')
     for file in getFiles_inDir('build', True, 1, ['.so', '.pyd']):
         src_path = os.path.join('build', file)
@@ -296,9 +299,28 @@ def genProject(opts):
         dest_path = os.path.join('result', mid_path, file_name)
         makeDirs(os.path.dirname(dest_path))
         shutil.copy(src_path, dest_path)
+    # 非编译文件靠谱至生成库路径
+    not_compile_files = get_not_compile_files(opts, will_compile_files)
+    for not_compile_file in not_compile_files:
+        dest_path = os.path.join('result', not_compile_file)
+        filepath, filename = os.path.split(dest_path)
+        makeDirs(filepath)
+        shutil.copyfile(not_compile_file, dest_path)
+
     if opts.release:
         clearTmpFiles()
     print("\nPy2Sec Encrypt Finished")
+
+
+def get_not_compile_files(opts, will_compile_files):
+    """获取非编译文件"""
+    files = getFiles_inDir(dir_path=opts.rootName,
+                           includeSubfolder=True,
+                           path_type=1,
+                           ext_names='*')
+    files = [os.path.join(opts.rootName, file) for file in files if not file.endswith('.pyc')]
+    not_compile_files = list(set(files) - set(will_compile_files))
+    return not_compile_files
 
 
 if __name__ == "__main__":
@@ -312,5 +334,5 @@ if __name__ == "__main__":
         for file in will_compile_files:
             genSetup(opts, [file])
             pyEncrypt(opts)
-    
-    genProject(opts)
+
+    genProject(opts, will_compile_files)
