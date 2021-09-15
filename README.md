@@ -32,6 +32,7 @@ error: command 'cl.exe' failed: No such file or directory
 
 ```
 pip install requirements.txt
+python setup.py install
 ```
 
 ## 使用说明
@@ -41,7 +42,7 @@ pip install requirements.txt
 请将要加密的目录或文件存放在py2sec根目录下
 
 ```
-python py2sec.py [选项] ...
+py2sec [选项] ...
 ```
 
 ### 选项
@@ -62,12 +63,9 @@ python py2sec.py [选项] ...
 ```
 
 ```
-python py2sec.py -f test.py
-python py2sec.py -f example/test1.py -r
-python py2sec.py -d example/ -m test1.py,bbb/
-
-# 一些操作系统使用 "python3" 命令来执行python3，如Ubuntu，这里可以使用 -p 参数来运行
-python3 py2sec.py -p 3 -d example/
+py2sec -f test.py
+py2sec -f example/test1.py -r
+py2sec -d example/ -m test1.py,bbb/
 ```
 
 ### 项目结构

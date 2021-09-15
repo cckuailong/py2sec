@@ -32,6 +32,7 @@ Please copy the directory or files to the root path of the py2sec.
 
 ```
 pip install requirements.txt
+python setup.py install
 ```
 
 ## How to use py2sec
@@ -39,7 +40,7 @@ pip install requirements.txt
 ### Usage
 
 ```
-python py2sec.py [options] ...
+py2sec [options] ...
 ```
 
 ### Options
@@ -63,12 +64,9 @@ python py2sec.py [options] ...
 ### Example
 
 ```
-python py2sec.py -f test.py
-python py2sec.py -f example/test1.py -r
-python py2sec.py -d example/ -m test1.py,bbb/
-
-# some OS use command "python3" to run python3, like Ubuntu, you can use -p to solve it
-python3 py2sec.py -p 3 -d example/
+py2sec -f test.py
+py2sec -f example/test1.py -r
+py2sec -d example/ -m test1.py,bbb/
 ```
 
 ### Project Structure

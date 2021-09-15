@@ -248,8 +248,8 @@ def genSetup(opts, will_compile_files):
 
 
 def clearBuildFolders():
-    if os.path.isdir("build"):
-        shutil.rmtree("build")
+    if os.path.isdir("../build"):
+        shutil.rmtree("../build")
     if os.path.isdir("tmp_build"):
         shutil.rmtree("tmp_build")
     if os.path.isdir("result"):
@@ -257,8 +257,8 @@ def clearBuildFolders():
 
 
 def clearTmpFiles():
-    if os.path.isdir("build"):
-        shutil.rmtree("build")
+    if os.path.isdir("../build"):
+        shutil.rmtree("../build")
     if os.path.isdir("tmp_build"):
         shutil.rmtree("tmp_build")
     if os.path.isfile("tmp_py2sec_build.py"):
@@ -291,8 +291,8 @@ def pyEncrypt(opts):
 
 def genProject(opts, will_compile_files):
     makeDirs('result')
-    for file in getFiles_inDir('build', True, 1, ['.so', '.pyd']):
-        src_path = os.path.join('build', file)
+    for file in getFiles_inDir('../build', True, 1, ['.so', '.pyd']):
+        src_path = os.path.join('../build', file)
         mid_path = os.path.sep.join(file.split(os.path.sep)[1:-1])
         file_name_parts = os.path.basename(src_path).split('.')
         file_name = '.'.join([file_name_parts[0]] + file_name_parts[-1:])
@@ -323,7 +323,10 @@ def get_not_compile_files(opts, will_compile_files):
     return not_compile_files
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Entry point
+    """
     opts = getCommandOptions(OptionsOfBuild())
     will_compile_files = getEncryptFileList(opts)
     clearBuildFolders()
@@ -336,3 +339,7 @@ if __name__ == "__main__":
             pyEncrypt(opts)
 
     genProject(opts, will_compile_files)
+
+
+if __name__ == "__main__":
+    main()
